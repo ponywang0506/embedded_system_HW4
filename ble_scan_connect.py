@@ -27,7 +27,7 @@ class MyDelegate(DefaultDelegate):
 
     def handleNotification(self, cHandle, data):
         global TIME
-        print("original data =",data)
+        print("received data =",data)
         data = str(data)
         d = data
         d = d.split('(')[1]
@@ -35,7 +35,6 @@ class MyDelegate(DefaultDelegate):
         print("(MagX,MagY,MagZ) = (%s)"%d)
 
         d = d.split(',')
-        print(d)
         rawdata = [int(s) for s in d]
 
         if TIME < POINTS_NUMBER:
