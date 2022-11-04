@@ -22,10 +22,6 @@ public:
             ValueBytes::MAX_VALUE_BYTES,
             GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_NOTIFY
         )
-        // magState(MAGNETO_STATE_CHARACTERISTIC_UUID,
-        //         &str,
-        //         GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_NOTIFY)
-        
         {
             GattCharacteristic *charTable[] = { &magState };
             GattService magService(
@@ -45,12 +41,6 @@ public:
             valueBytes.getPointer(),
             valueBytes.getNumValueBytes()
         );
-
-
-        // ble.gattServer().write(magState.getValueHandle(), (uint8_t *)valueBytes, 4);
-
-
-        // ble.gattServer().write(magState.getValueHandle(),(int8_t *)&(test[0]),60);
     }
 
 ///////////////////////////////////////////////////////////////////////////////////////////
@@ -94,12 +84,8 @@ protected:
 
 private:
     BLE &ble;
-    // ReadOnlyGattCharacteristic<char *> magState;
-    // int8_t valueBytes[50];
     ValueBytes valueBytes;
     GattCharacteristic magState;
-    // ReadOnlyGattCharacteristic<char *> magState;
-    
 };
 
 #endif
