@@ -4,47 +4,11 @@ from bluepy.btle import *
 from bluepy.btle import *
 import matplotlib.pyplot as plot
 
+POINTS_NUMBER = 10
 MAGX = []
 MAGY = []
 MAGZ = []
-
-POINTS_NUMBER = 10
-
-def dec(data):
-    ans = []
-    for i in data:
-        ans.append(i)
-    print("array =",ans)
-    if len(ans)==2:
-        data = ans[1]
-    else:
-        data = ans[2]*256+ans[1]
-    
-    if data >= 32768:
-        data = data-65536
-    return ans , data
-
-
-class RingBuffer:
-    def __init__(self,size_max):
-        self.max = size_max
-        self.data = []
-
-    class __Full: 
-        def append(self, x):
-            self.data[self.cur] = x
-            self.cur = (self.cur+1) % self.max
-        def get(self):
-            return self.data[self.cur:]+self.data[:self.cur]
-
-    def append(self,x):
-        self.data.append(x)
-        if len(self.data) == self.max:
-            self.cur = 0
-            self.__class__ = self.__Full
-
-    def get(self):
-        return self.data
+TIME = 0
 
 
 class ScanDelegate(DefaultDelegate):
@@ -62,32 +26,41 @@ class MyDelegate(DefaultDelegate):
         DefaultDelegate.__init__(self)
 
     def handleNotification(self, cHandle, data):
+        global TIME
         print("original data =",data)
-        # ans = []
-        # for i in data:
-        #     ans.append(i)
-        # print("array =",ans)
-        # if len(ans)==2:
-        #     data = ans[1]
-        # else:
-        #     data = ans[2]*256+ans[1]
-        
-        # if data >= 32768:
-        #     data = data-65536
+        data = str(data)
+        d = data
+        d = d.split('(')[1]
+        d = d.split(')')[0]
+        print("(MagX,MagY,MagZ) = (%s)"%d)
 
-        ans , data = dec(data)
-        # print('arr =', ans)
-        # print("A notification was received:", data)
-        print(MAGX,MAGY,MAGZ)
+        d = d.split(',')
+        print(d)
+        rawdata = [int(s) for s in d]
 
-        if len(MAGX) < POINTS_NUMBER:
-            MAGX.append(data)
-        elif len(MAGY) < POINTS_NUMBER:
-            MAGY.append(data)
-        elif len(MAGZ) < POINTS_NUMBER:
-            MAGZ.append(data)
+        if TIME < POINTS_NUMBER:
+            MAGX.append(rawdata[0])
+            MAGY.append(rawdata[1])
+            MAGZ.append(rawdata[2])
+        elif TIME == POINTS_NUMBER:
+            drawResult()
 
+        TIME += 1
+            
 
+def drawResult():
+    t = [i for i in range(POINTS_NUMBER)]
+    f = plot.figure() 
+    ax = f.subplots(1,3,sharex='col',sharey='row')
+    ax[0].scatter(t, MAGX , c='blue')
+    ax[1].scatter(t, MAGY , c='c')
+    ax[2].scatter(t, MAGZ , c='g')
+    name_list=['MagX','MagY','MagZ']
+    for i in range(3):
+        ax[i].set_xlabel('sample num')
+        ax[i].legend([name_list[i]])
+    plot.savefig('result.png')
+    print("Finish Drawing The Result")
 
 
 chosenDevice = "e3:f7:e6:cf:e6:6e"
@@ -127,80 +100,19 @@ for svc in dev.services:
 dev.setDelegate( MyDelegate() )
 
 
-'''###############################################################################'''
-service_uuid = 0x180F
+service_uuid = 0x180D
 SERVICE_UUID = UUID(service_uuid)
+
 svc = dev.getServiceByUUID(SERVICE_UUID)
 ch = svc.getCharacteristics()[0]
 print(ch.valHandle)
 
 dev.writeCharacteristic(ch.valHandle+1, bytes([1,0]))
 
-while len(MAGX)<POINTS_NUMBER:
+while TIME<100:
     if dev.waitForNotifications(1.0):
-        # handleNotification() was called
         continue
 
 
-dev.writeCharacteristic(ch.valHandle+1, bytes([0,0]))
-
-'''###############################################################################'''
-service_uuid = 0x1803
-SERVICE_UUID = UUID(service_uuid)
-svc = dev.getServiceByUUID(SERVICE_UUID)
-ch = svc.getCharacteristics()[0]
-print(ch.valHandle)
-
-dev.writeCharacteristic(ch.valHandle+1, bytes([1,0]))
-
-while len(MAGY)<POINTS_NUMBER:
-    if dev.waitForNotifications(1.0):
-        # handleNotification() was called
-        continue
-
-dev.writeCharacteristic(ch.valHandle+1, bytes([0,0]))
-
-'''###############################################################################'''
-service_uuid = 0x1809
-SERVICE_UUID = UUID(service_uuid)
-svc = dev.getServiceByUUID(SERVICE_UUID)
-ch = svc.getCharacteristics()[0]
-print(ch.valHandle)
-
-dev.writeCharacteristic(ch.valHandle+1, bytes([1,0]))
-
-while len(MAGZ)<POINTS_NUMBER:
-    if dev.waitForNotifications(1.0):
-        # handleNotification() was called
-        continue
-
-dev.writeCharacteristic(ch.valHandle+1, bytes([0,0]))
-
-
-
-
-print(MAGX,MAGY,MAGZ)
-
-t = [i for i in range(POINTS_NUMBER)]
-
-f = plot.figure() 
-
-ax = f.subplots(1,3,sharex='col',sharey='row')
-
-ax[0].scatter(t, MAGX , c='blue')
-ax[1].scatter(t, MAGY , c='c')
-ax[2].scatter(t, MAGZ , c='g')
-
-name_list=['MagX','MagY','MagZ']
-for i in range(3):
-    print(type(ax[i]))
-    ax[i].set_xlabel('sample num')
-    ax[i].legend([name_list[i]])
-
-plot.show()
-
-
-
-# disconnect
 dev.disconnect()
 
