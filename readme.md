@@ -35,6 +35,8 @@ for example, to use STM32 board, we must add
 
 
 ## Result
-### Gatt Server ()
+From command line of raspiberry pi, we may find the client received the data from server. The form is of "(MagX,MagY,MagZ)"
+![](https://github.com/ponywang0506/embedded_system_HW4/blob/master/result/raspiberry_cmd.png)
+
+Visualizing the data of magneto
 ![](https://github.com/ponywang0506/embedded_system_HW4/blob/master/result/result.png)
-### Gatt Client ()
