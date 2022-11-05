@@ -33,3 +33,8 @@ for example, to use STM32 board, we must add
 2. Upload the ```ble_scan_connect.py``` to raspiberry pi and run the command ```sudo python ble_scan_connect.py``` to start the client.
 
 
+
+## Result
+### Gatt Server ()
+![gatt server](https://raw.github.com/ponywang0506/embedded_system/master/result/result.png)
+### Gatt Client ()
