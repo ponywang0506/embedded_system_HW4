@@ -31,7 +31,7 @@ for example, to use STM32 board, we must add
         chosenDevice = "e3:f7:e6:cf:e6:6e"
 ```
 2. Upload the ```ble_scan_connect.py``` to raspiberry pi and run the command ```sudo python ble_scan_connect.py``` to start the client.
-3. The python program will save visualized image to ```result.png``` after ten data received. (Changing the value of POINT_NUMBERS can change sample number)
+3. The python program will save visualized image to ```result.png``` after ten data received. (Changing the value of ```POINT_NUMBERS``` can change sample number)
 
 
 
