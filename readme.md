@@ -11,7 +11,17 @@ To run the program, we should follow steps below:
 2. cd mbed-os-example-ble
 3. New an mbed studio project, delete the main.cpp
 4. Copy the files under the directory BLE_GattServer_AddService to the new project
-5. Modify mbed_app.json (see next page)
+5. Modify the ```target_overrides``` section in mbed_app.json in order to use the wanted board
+
+for example, to use STM32 board, we must add 
+```
+        "NUCLEO_F401RE": {
+            "target.components_add": ["BlueNRG_2"],
+            "target.features_add": ["BLE"],
+            "target.extra_labels_add": ["CORDIO"]
+        },
+```
+
 6. Compile and Run
 
 
