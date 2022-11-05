@@ -36,5 +36,5 @@ for example, to use STM32 board, we must add
 
 ## Result
 ### Gatt Server ()
-![gatt server](https://raw.github.com/ponywang0506/embedded_system/master/result/result.png)
+![](https://github.com/ponywang0506/embedded_system_HW4/blob/master/result/result.png)
 ### Gatt Client ()
