@@ -26,7 +26,7 @@ for example, to use STM32 board, we must add
 8. Compile and Run the mbed part and will build a gattserver on your board.
 
 **Client Part**
-1. Modify the device mac address at line 65 of ```ble_scan_connect.py``` to your device mac address
+1. Modify the device mac address at ```ble_scan_connect.py, line 65``` to your device mac address
 ```
         chosenDevice = "e3:f7:e6:cf:e6:6e"
 ```
