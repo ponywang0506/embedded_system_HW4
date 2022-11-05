@@ -21,9 +21,7 @@
 #include "ble/services/HeartRateService.h"
 
 
-#include "./Mag.h"
-
-
+#include "Mag.h"
 #include "pretty_printer.h"
 #include "mbed-trace/mbed_trace.h"
 
@@ -43,9 +41,13 @@ public:
     HeartrateDemo(BLE &ble, events::EventQueue &event_queue) :
         _ble(ble),
         _event_queue(event_queue),
-        _magneto_uuid(Mag::MAGNETO_SERVICE_UUID), //0x180D
+
+        _heartrate_uuid(GattService::UUID_HEART_RATE_SERVICE),  //0x180D
+        _heartrate_value(100),
+        _heartrate_service(ble, _heartrate_value, HeartRateService::LOCATION_FINGER),
 
 
+        _magneto_uuid(Mag::MAGNETO_SERVICE_UUID), //0xA002
         x(0),y(0),z(0),
         _magneto_service(ble,str),
 
@@ -98,6 +100,7 @@ private:
         _adv_data_builder.setFlags();
         _adv_data_builder.setAppearance(ble::adv_data_appearance_t::GENERIC_HEART_RATE_SENSOR);
         _adv_data_builder.setLocalServiceList({&_magneto_uuid, 1});
+        _adv_data_builder.setLocalServiceList({&_heartrate_uuid, 1});
         _adv_data_builder.setName(DEVICE_NAME);
 
         /* Setup advertising */
@@ -136,15 +139,18 @@ private:
 
     void update_sensor_value()
     {   
+        // simulated heartrate value
+        _heartrate_value++;       
+        if (_heartrate_value == 110) {
+            _heartrate_value = 60;
+        }
+        _heartrate_service.updateHeartRate(_heartrate_value);
+
+
+        // from magnetometer getting magneto value
         int16_t pDataXYZ[3];
         BSP_MAGNETO_GetXYZ(pDataXYZ);
-
-        x = pDataXYZ[0];
-        y = pDataXYZ[1];
-        z = pDataXYZ[2];
-
-        sprintf(str,"(%d,%d,%d)",x,y,z);
-    
+        sprintf(str,"(%d,%d,%d)",pDataXYZ[0],pDataXYZ[1],pDataXYZ[2]);
         _magneto_service.updateMagState(str);
 
     }
@@ -176,12 +182,19 @@ private:
     BLE &_ble;
     events::EventQueue &_event_queue;
 
-    UUID _magneto_uuid;
 
+    UUID _heartrate_uuid;
+    uint16_t _heartrate_value;
+    HeartRateService _heartrate_service;
+
+
+    UUID _magneto_uuid;
     int16_t x,y,z;
     char str[STRSIZE];
-
     Mag _magneto_service;
+
+
+
 
     uint8_t _adv_buffer[ble::LEGACY_ADVERTISING_MAX_SIZE];
     ble::AdvertisingDataBuilder _adv_data_builder;
