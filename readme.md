@@ -36,8 +36,10 @@ for example, to use STM32 board, we must add
 
 
 ## Result
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 #### From command line of raspiberry pi, we may find the client received the data from server. The form is of "(MagX,MagY,MagZ)"
 ![](https://github.com/ponywang0506/embedded_system_HW4/blob/master/result/raspiberry_cmd.png)
 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 #### Visualizing the data of magneto
 ![](https://github.com/ponywang0506/embedded_system_HW4/blob/master/result/result.png)
