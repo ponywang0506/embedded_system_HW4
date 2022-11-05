@@ -9,10 +9,10 @@ This is the program to let raspberry pi be a gatt client and find gatt server(ST
 To run the program, we should follow steps below:
 1. run the command ```git clone https://github.com/ARMmbed/mbed-os-example-ble``` to get BLE_GattServer_AddService program
 2. cd mbed-os-example-ble
-  • New an mbed studio project, delete the main.cpp
-  • Copy the files under the directory BLE_GattServer_AddService to the new project
-  • Modify mbed_app.json (see next page)
-  • Compile and Run
+3. New an mbed studio project, delete the main.cpp
+4. Copy the files under the directory BLE_GattServer_AddService to the new project
+5. Modify mbed_app.json (see next page)
+6. Compile and Run
 
 
 
