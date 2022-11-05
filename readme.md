@@ -10,7 +10,7 @@ To run the program, we should follow steps below:
 
 **Server Part**
 1. run the command ```git clone https://github.com/ARMmbed/mbed-os-example-ble``` to get BLE_GattServer_AddService program
-2. run the command ```git clone -b pony https://github.com/ponywang0506/embedded_system_HW4``` to get this program
+2. run the command ```git clone https://github.com/ponywang0506/embedded_system_HW4``` to get this program
 3. cd mbed-os-example-ble
 4. New an mbed studio project, delete the main.cpp
 5. Copy the files under the directory BLE_GattServer_AddService to the new project
