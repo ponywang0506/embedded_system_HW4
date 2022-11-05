@@ -7,7 +7,8 @@ This is the program to let raspberry pi be a gatt client and find gatt server(ST
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 To run the program, we should follow steps below:
-*Mbed Part*
+
+**Server Part**
 1. run the command ```git clone https://github.com/ARMmbed/mbed-os-example-ble``` to get BLE_GattServer_AddService program
 2. run the command ```git clone -b pony https://github.com/ponywang0506/embedded_system_HW4``` to get this program
 3. cd mbed-os-example-ble
@@ -15,7 +16,6 @@ To run the program, we should follow steps below:
 5. Copy the files under the directory BLE_GattServer_AddService to the new project
 6. Replace the source folder in the new project to the one in embedded_system_HW4
 7. Modify the ```target_overrides``` section in mbed_app.json in order to use the wanted board
-
 for example, to use STM32 board, we must add 
 ```
         "DISCO_L475VG_IOT01A": {
@@ -23,8 +23,13 @@ for example, to use STM32 board, we must add
             "target.extra_labels_add":["CORDIO", "CORDIO_BLUENRG"]
         },
 ```
-
 8. Compile and Run the mbed part and will build a gattserver on your board.
 
+**Client Part**
+1. Modify the device mac address to your device mac address
+```
+        chosenDevice = "e3:f7:e6:cf:e6:6e"
+```
+2. Upload the ```ble_scan_connect.py``` to raspiberry pi and run the command ```sudo python ble_scan_connect.py``` to start the client.
 
 
