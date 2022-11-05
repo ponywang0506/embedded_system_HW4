@@ -15,10 +15,9 @@ To run the program, we should follow steps below:
 
 for example, to use STM32 board, we must add 
 ```
-        "NUCLEO_F401RE": {
-            "target.components_add": ["BlueNRG_2"],
-            "target.features_add": ["BLE"],
-            "target.extra_labels_add": ["CORDIO"]
+        "DISCO_L475VG_IOT01A": {
+            "target.features_add":["BLE"],
+            "target.extra_labels_add":["CORDIO", "CORDIO_BLUENRG"]
         },
 ```
 
