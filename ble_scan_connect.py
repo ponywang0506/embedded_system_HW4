@@ -99,7 +99,7 @@ for svc in dev.services:
 dev.setDelegate( MyDelegate() )
 
 
-service_uuid = 0x180D
+service_uuid = 0xA002
 SERVICE_UUID = UUID(service_uuid)
 
 svc = dev.getServiceByUUID(SERVICE_UUID)
